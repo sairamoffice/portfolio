@@ -25,47 +25,39 @@ menu_item.forEach((item) => {
 });
 // Sending email through FormSubmit when clicking Send Message
 document.getElementById("contactForm").addEventListener("submit", function(event) {
-    event.preventDefault();  // Prevent the default form submission
-  
-    // Validate phone number (international support)
+    event.preventDefault();  
+
     let phoneInput = document.querySelector('input[name="phone"]');
     let phoneValue = phoneInput.value;
-  
-    // Allow +, numbers, and spaces (like: +1 9876543210 or 9876543210)
+
     let phoneRegex = /^[+]?[\d\s]{10,15}$/;
   
     if (!phoneRegex.test(phoneValue)) {
         alert("Please enter a valid phone number (with or without country code).");
-        return;  // Stop the form submission
+        return;
     }
 
-    // Show "Sending..." text
     let submitButton = document.querySelector(".submit-btn");
     submitButton.innerHTML = "Sending...";
-  
-    // Get form data
+
     let formData = new FormData(this);
 
-    // Send email using FormSubmit API
-    fetch("https://formsubmit.co/ajax/ramsriram9858@gmail.com", {
+    fetch("/submit", {  // Your Flask backend route
         method: "POST",
         body: formData
     })
-    .then(response => response.json())
+    .then(response => response.json())  // Parse JSON response
     .then(data => {
-        if(data.success) {
-            // Delay the success message for smooth animation
+        if (data.success) {
             setTimeout(function() {
-                // Show success message
                 document.getElementById("successMessage").style.display = "block";
                 document.getElementById("successMessage").classList.add("fadeInSuccess");
-
-                // Hide the form after submission
                 document.querySelector(".contact-form").style.display = "none";
-
-                // Reset the button text
                 submitButton.innerHTML = "Message Sent!";
             }, 1000);
+        } else {
+            alert(data.message);  // Show error message from Flask
+            submitButton.innerHTML = "Send Message";
         }
     })
     .catch(error => {
@@ -74,4 +66,5 @@ document.getElementById("contactForm").addEventListener("submit", function(event
         submitButton.innerHTML = "Send Message";
     });
 });
+
 

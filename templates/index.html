@@ -134,7 +134,7 @@
         <h1 class="section-title">About <span>me</span></h1>
         <h2>Software Engineer</h2>
         <p>I am a Software Engineer with expertise in Python, Django, and JavaScript. I specialize in building web applications with clean, efficient, and scalable code. Proficient in HTML, CSS, Bootstrap, and MySQL for full-stack development. I have basic knowledge of AWS for cloud deployment and hosting. I developed AutoServ Tracker, a vehicle record management system, and Social Media Broadcast Automation, a tool for scheduling and posting across social platforms.I am passionate about problem-solving, automation, and creating impactful software. Constantly learning and improving to stay ahead in technology and innovation.</p>
-          <a href="{{ url_for('static', filename='sairamresume.pdf') }}" download="srisairamresume.pdf" target="_blank" class="cta">Download Resume</a>
+          <a href="{{ url_for('static', filename='sai resume.pdf') }}" download="srisairamresume.pdf" target="_blank" class="cta">Download Resume</a>
       </div>
     </div>
   </section>
@@ -178,14 +178,12 @@
 <!-- Contact Form Section -->
 <div class="contact-form-section">
   <h2>Get in Touch</h2>
-  <form id="contactForm" class="contact-form"  method="POST">
+  <form id="contactForm" class="contact-form" method="POST">
     
     <!-- Name -->
     <div class="form-group">
       <label for="name">Full Name</label>
       <input type="text" id="name" name="name" placeholder="Your Full Name" required>
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_template" value="table">
     </div>
     
     <!-- Email -->
@@ -209,12 +207,14 @@
     <!-- Submit Button -->
     <button type="submit" class="submit-btn">Send Message</button>
   </form>
-  
-  <!-- Success Message -->
-  <div id="successMessage" class="success-message">
-    <h3>✅ Thank you! Your message has been sent.</h3>
-  </div>
+<!-- ✅ Moved Success Message OUTSIDE the Form -->
+<div id="successMessage" class="success-message" style="display: none;">
+  <h3>✅ Thank you! Your message has been sent.</h3>
 </div>
+</div>
+
+
+
 
 
 <!-- Footer -->

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify  # Add jsonify
 import smtplib
 import os
 
@@ -16,13 +16,12 @@ def submit():
     phone = request.form["phone"]
     message = request.form["message"]
 
-    # Email settings using environment variables
-    sender_email = os.environ.get("EMAIL_USER")
-    sender_password = os.environ.get("EMAIL_PASSWORD")
-    receiver_email = "ramsriram9858@gmail.com"
+    # ✅ Update your email and App Password here
+    sender_email = "ramsriram9858@gmail.com"  # Replace with your email
+    sender_password = "dtwo uitd qvqo bwat"  # Replace with your Google App Password
+    receiver_email = "ramsriram9858@gmail.com"  # Change if needed
 
-    # Email content
-    subject = "✉️ New Message from Your Portfolio"
+    subject = "New Message from Your  sri sai ram Portfolio"
     body = f"""
     Hi, you received a new message from your portfolio:
 
@@ -32,14 +31,15 @@ def submit():
     Message: {message}
     """
 
-    # Sending the email
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            server.ehlo()  # Optional, identifies with the server
             server.login(sender_email, sender_password)
             server.sendmail(sender_email, receiver_email, f"Subject: {subject}\n\n{body}")
-        return "✅ Message sent successfully!"
+        
+        return jsonify({"success": True, "message": "Message sent successfully!"})  # Return JSON
     except Exception as e:
-        return f"❌ Failed to send message. Error: {str(e)}"
+        return jsonify({"success": False, "message": f"Failed to send message. Error: {str(e)}"}), 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=port, debug=True)
